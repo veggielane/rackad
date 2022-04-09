@@ -21,4 +21,9 @@ jobs:
         run: |
           conda info
           conda list
+          mkdir outputs
           python build.py
+      - uses: actions/upload-artifact@v3
+        with:
+          name: outputs
+          path: outputs/

@@ -3,19 +3,22 @@ name: Python Package using Conda
 on: [push]
 
 jobs:
-  build-linux:
+  build:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
     steps:
-      - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup 
+        uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: cadquery
           environment-file: environment.yml
           python-version: 3.10.4
-      - shell: bash -l {0}
+      - name: Run
+        shell: bash -l {0}
         run: |
           conda info
           conda list
-          python .\box.py
+          python build.py

@@ -9,7 +9,7 @@ jobs:
       max-parallel: 5
     steps:
       - uses: actions/checkout@v2
-      - uses: goanpeca/setup-miniconda@v1
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: cadquery
           environment-file: environment.yml

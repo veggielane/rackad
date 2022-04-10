@@ -14,4 +14,4 @@ class Blank(Part):
         )
 
     def build(self):
-        return cq.Workplane("XY").box(3, 3, 0.5).edges("|Z").fillet(0.125)
+        return cq.Workplane("XY").box(self.width, self.height, 2).edges("|Z").fillet(2)

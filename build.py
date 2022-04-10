@@ -1,13 +1,15 @@
 from rackad.lib import RackSize
 import rackad.panels as panels
 import cadquery as cq
+from rackad.builder import build
 
 
-part = panels.Blank(RackSize.NINETEEN, 1)
 
+parts = [
+    panels.Blank(RackSize.NINETEEN, 1),
+    panels.Blank(RackSize.NINETEEN, 2),
+    panels.Blank(RackSize.TEN, 1),
+    panels.Blank(RackSize.TEN, 2),
+    ]
 
-build = part.build().val()
-
-
-build.exportStep(f"outputs/{part.number}.step")
-cq.exporters.export(build, f"outputs/{part.number}.stl")
+build = build(parts)

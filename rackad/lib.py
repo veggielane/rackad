@@ -1,18 +1,17 @@
 import cadquery as cq
-def rack_height(u):
-  return 44.45 * u - 0.794
+from enum import Enum
 
 
-
-class Component:
-    def __init__(self, number:str, name:str):
-        self.number = number
-        self.name = name
-
-    def build(self):
-        raise NotImplementedError(type(self))
+class RackSize(Enum):
+    NINETEEN = 19
+    TEN_PNT_FIVE = 10.5
+    TEN = 10
+    NINE_PNT_FIVE = 9.5
 
 
-class Part(Component):
-    def __init__(self,number:str, name:str):
-        super(Component, self).__init__(number, name)
+def panel_height(u):
+    return round(44.45 * u - 0.794, 1)
+
+
+def panel_width(size: RackSize):
+    return round(size.value * 25.4, 1)

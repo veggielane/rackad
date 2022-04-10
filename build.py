@@ -1,7 +1,11 @@
+from rackad.lib import RackSize
 import rackad.panels as panels
 import cadquery as cq
 
-part = panels.Blank(1)
+
+part = panels.Blank(RackSize.NINETEEN, 1)
+
+
 build = part.build().val()
 
 

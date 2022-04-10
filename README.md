@@ -1,1 +1,4 @@
-# rackad
+# RackAD
+
+## Rules
+ - All Holes populated

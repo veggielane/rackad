@@ -1,6 +1,9 @@
+import rackad.panels as panels
 import cadquery as cq
 
-result = cq.Workplane("XY" ).box(3, 3, 0.5).edges("|Z").fillet(0.125)
+part = panels.Blank(1)
+build = part.build().val()
 
-result.val().exportStep("outputs/box.step")
-cq.exporters.export(result, 'outputs/box.stl')
+
+build.exportStep(f"outputs/{part.number}.step")
+cq.exporters.export(build, f"outputs/{part.number}.stl")

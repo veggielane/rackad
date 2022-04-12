@@ -3,6 +3,7 @@ from typing import List
 from rackad.Component import Component
 import cadquery as cq
 
+
 def build(components: List[Component]):
     for comp in components:
         built = comp.build().val()

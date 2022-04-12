@@ -2,7 +2,6 @@ import cadquery as cq
 from enum import Enum
 
 
-
 class RackSize(Enum):
     NINETEEN = 19
     TEN_PNT_FIVE = 10.5

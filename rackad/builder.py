@@ -1,4 +1,4 @@
-from msilib.schema import Component
+
 from typing import List
 from rackad.Component import Component
 import cadquery as cq

@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "c:\\Users\\chris\\.vscode\\extensions\\roipoussiere.cadquery-0.1.2\\stubs"
+    ]
+}

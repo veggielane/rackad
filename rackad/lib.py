@@ -8,6 +8,8 @@ class RackSize(Enum):
     TEN = 10
     NINE_PNT_FIVE = 9.5
 
+panel_thickness = 2
+panel_fillet = 2
 
 def panel_height(u):
     return round(44.45 * u - 0.794, 1)

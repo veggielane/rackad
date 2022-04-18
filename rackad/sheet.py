@@ -69,5 +69,3 @@ result = result.flange(lambda wp: wp.faces(">Y"), lambda wp: wp.edges(">Z"), 90,
 result = result.flange(
     lambda wp: wp.faces("<Y"), lambda wp: wp.edges(">Z"), 90, 1, 5, True
 )
-show_object(result)
-cq.exporters.export(result, "c:/temp/sheet.step")

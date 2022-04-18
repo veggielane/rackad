@@ -1,45 +1,51 @@
 import cadquery as cq
-result = cq.Workplane("XY").box(40,40, 0.5)
-
-
+from typing import Callable
+import math 
 
 def flange(
     wp: cq.Workplane,
-    selector: str,
+    face_selector: Callable[[cq.Workplane], cq.Workplane],
+    edge_selector: Callable[[cq.Workplane], cq.Workplane],
+    angle: float,
+    radius: float,
+    distance: float,
+    flip: bool = False,
 ) -> cq.Workplane:
-
     def _flange_callback(face):
-
-        
-
         face_wp = cq.Workplane(face)
-        long_edge = face_wp.edges(selector).first()
         
+        long_edge = edge_selector(face_wp).first()
+        xaxis = long_edge.val().endPoint() - long_edge.val().startPoint()
+        short_edge = face_wp.edges(cq.selectors.PerpendicularDirSelector(xaxis)).first()
+        thickness = short_edge.val().Length()
+
         center = face.Center()
         zaxis = -face.normalAt()
-        
-        
-        
-        xaxis = long_edge.val().endPoint() - long_edge.val().startPoint()
+
+        if flip:
+            xaxis = -xaxis
+
         fwp = cq.Workplane(cq.Plane(center, xaxis, zaxis), origin=center, obj=face)
         
-        show_object(face_wp)
-        
-        show_object(long_edge)
-        
-        show_object(fwp.wires().toPending().revolve(90,(-1,-5,0),(1,-5,0)))
+        bend = fwp.wires().toPending().revolve(angle, (-1, radius+thickness/2.0, 0), (1, radius+thickness/2.0, 0))
 
-        return face
 
-    return wp.each(_flange_callback)
+        bend = bend.faces(cq.selectors.AndSelector(cq.selectors.AndSelector(cq.selectors.InverseSelector(cq.selectors.ParallelDirSelector(xaxis)),cq.selectors.InverseSelector(cq.selectors.ParallelDirSelector(zaxis))),cq.selectors.TypeSelector("PLANE"))).tag("end").workplane().faces(tag="end").wires().toPending().extrude(distance)
+       
+        
+        return bend.val()
+
+    return wp.union(face_selector(wp).each(_flange_callback))
+
 
 cq.Workplane.flange = flange
 
+result = cq.Workplane("XY").box(10, 10, 1)
+result = result.flange(lambda wp: wp.faces(">Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)
+result = result.flange(lambda wp: wp.faces("<Y"), lambda wp: wp.edges(">Z"), 90, 1, 5, True)
 show_object(result)
-face = result.faces("<Y").flange(">Z")
+cq.exporters.export(result, 'c:/temp/sheet.step')
+# edge = face
 
 
-#edge = face
-
-
-#result.flange()
+# result.flange()

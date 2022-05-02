@@ -46,21 +46,27 @@ def flange(
         face_wp = cq.Workplane(face)
         long_edge = edge_selector(face_wp).first()
         long_edge_axis = long_edge.val().endPoint() - long_edge.val().startPoint()
-        
-        #Calculate thickness
-        short_edge = face_wp.edges(cq.selectors.PerpendicularDirSelector(long_edge_axis)).first()
+
+        # Calculate thickness
+        short_edge = face_wp.edges(
+            cq.selectors.PerpendicularDirSelector(long_edge_axis)
+        ).first()
         thickness = short_edge.val().Length()
 
         center = face.Center()
         zaxis = -face.normalAt()
-        
-        #calculate the vector from the center of face to long_edge and use that to calculate xaxis
-        long_edge_mid = cq.Vector((long_edge.val().startPoint().x+long_edge.val().endPoint().x)/2.0,(long_edge.val().startPoint().y+long_edge.val().endPoint().y)/2.0,(long_edge.val().startPoint().z+long_edge.val().endPoint().z)/2.0)
+
+        # calculate the vector from the center of face to long_edge and use that to calculate xaxis
+        long_edge_mid = cq.Vector(
+            (long_edge.val().startPoint().x + long_edge.val().endPoint().x) / 2.0,
+            (long_edge.val().startPoint().y + long_edge.val().endPoint().y) / 2.0,
+            (long_edge.val().startPoint().z + long_edge.val().endPoint().z) / 2.0,
+        )
         xaxis = (long_edge_mid).cross(face.normalAt())
-        
+
         if flip:
             xaxis = -xaxis
-        
+
         bend = (
             cq.Workplane(cq.Plane(center, xaxis, zaxis), origin=center, obj=face)
             .wires()

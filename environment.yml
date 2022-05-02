@@ -4,5 +4,6 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - vtk=9.0.1
   - cadquery=master
   - black

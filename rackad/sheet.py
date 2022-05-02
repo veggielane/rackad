@@ -95,13 +95,9 @@ def flange(
 
     return wp.union(face_selector(wp).each(_flange_callback))
 
-
 cq.Workplane.flange = flange
 
-result = cq.Workplane("XY").box(10, 10, 1)
-
-result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)
-show_object(result)
-# result = result.flange(
-#    lambda wp: wp.faces("<Y"), lambda wp: wp.edges(">Z"), 90, 1, 5, True
-# )
+#if __name__ == "__main__":
+#    result = cq.Workplane("XY").box(10, 10, 1)
+#    result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)
+#    show_object(result)

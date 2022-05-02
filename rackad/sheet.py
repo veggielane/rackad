@@ -45,15 +45,25 @@ def flange(
     def _flange_callback(face):
         face_wp = cq.Workplane(face)
         long_edge = edge_selector(face_wp).first()
-        xaxis = long_edge.val().endPoint() - long_edge.val().startPoint()
-        short_edge = face_wp.edges(cq.selectors.PerpendicularDirSelector(xaxis)).first()
+        long_edge_axis = long_edge.val().endPoint() - long_edge.val().startPoint()
+        
+        #Calculate thickness
+        short_edge = face_wp.edges(cq.selectors.PerpendicularDirSelector(long_edge_axis)).first()
         thickness = short_edge.val().Length()
 
         center = face.Center()
         zaxis = -face.normalAt()
+
+        a = long_edge.val().startPoint()
+        b = long_edge.val().endPoint()
+        long_edge_mid = cq.Vector((a.x+b.x)/2.0,(a.y+b.y)/2.0,(a.z+b.z)/2.0)
+        log(center - long_edge_mid)
+
+        xaxis = (long_edge_mid).cross(face.normalAt())
+        
         if flip:
             xaxis = -xaxis
-
+        
         bend = (
             cq.Workplane(cq.Plane(center, xaxis, zaxis), origin=center, obj=face)
             .wires()
@@ -88,6 +98,7 @@ cq.Workplane.flange = flange
 result = cq.Workplane("XY").box(10, 10, 1)
 
 result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)
+show_object(result)
 # result = result.flange(
 #    lambda wp: wp.faces("<Y"), lambda wp: wp.edges(">Z"), 90, 1, 5, True
 # )

@@ -2,7 +2,7 @@ from rackad.lib import RackSize
 import rackad.panels as panel
 import rackad.mount as mount
 import cadquery as cq
-from rackad.builder import output
+from rackad.builder import output, build
 
 
 parts = [
@@ -14,4 +14,9 @@ parts = [
     mount.Switch8(),
 ]
 
-output(parts)
+
+if 'show_object' in locals():
+    for key, value in build(parts).items():
+        show_object(value, name=key.number)
+else:
+    output(parts)

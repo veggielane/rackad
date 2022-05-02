@@ -4,12 +4,12 @@ import cadquery as cq
 import rackad.sheet
 
 
-def build(components: List[Component]):
+def output(components: List[Component]):
     for comp in components:
         print(f"building {comp.name}")
         built = comp.build().val()
         built.exportStep(f"outputs/{comp.number}.step")
         cq.exporters.export(built, f"outputs/{comp.number}.stl")
 
-def show(components: List[Component]):
-    return map(lambda comp: comp.build().val(), components)
+def build(components: List[Component]):
+    return dict(zip(components, map(lambda comp: comp.build().val(), components)))

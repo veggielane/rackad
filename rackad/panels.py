@@ -7,7 +7,7 @@ from rackad.lib import (
     panel_fillet,
 )
 from rackad.part import Part
-import rackad.sheet
+from rackad.sheet import *
 
 class PanelFlat(Part):
     def __init__(self, width: RackSize, u: int):

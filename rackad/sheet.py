@@ -53,12 +53,9 @@ def flange(
 
         center = face.Center()
         zaxis = -face.normalAt()
-
-        a = long_edge.val().startPoint()
-        b = long_edge.val().endPoint()
-        long_edge_mid = cq.Vector((a.x+b.x)/2.0,(a.y+b.y)/2.0,(a.z+b.z)/2.0)
-        log(center - long_edge_mid)
-
+        
+        #calculate the vector from the center of face to long_edge and use that to calculate xaxis
+        long_edge_mid = cq.Vector((long_edge.val().startPoint().x+long_edge.val().endPoint().x)/2.0,(long_edge.val().startPoint().y+long_edge.val().endPoint().y)/2.0,(long_edge.val().startPoint().z+long_edge.val().endPoint().z)/2.0)
         xaxis = (long_edge_mid).cross(face.normalAt())
         
         if flip:

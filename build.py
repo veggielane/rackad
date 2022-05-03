@@ -15,7 +15,7 @@ parts = [
 ]
 
 
-if 'show_object' in locals():
+if "show_object" in locals():
     for key, value in build(parts).items():
         show_object(value, name=key.number)
 else:

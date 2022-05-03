@@ -9,6 +9,7 @@ from rackad.lib import (
 from rackad.part import Part
 from rackad.sheet import *
 
+
 class PanelFlat(Part):
     def __init__(self, width: RackSize, u: int):
         self.width = panel_width(width)
@@ -30,6 +31,7 @@ class PanelFlat(Part):
             .hole(5)
         )
 
+
 class PanelFormed(Part):
     def __init__(self, width: RackSize, u: int):
         self.width = panel_width(width)
@@ -43,7 +45,6 @@ class PanelFormed(Part):
             cq.Workplane("XY")
             .box(self.width, self.height, panel_thickness)
             .flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)
-            
         )
 
 

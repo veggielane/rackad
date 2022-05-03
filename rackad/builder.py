@@ -11,5 +11,6 @@ def output(components: List[Component]):
         built.exportStep(f"outputs/{comp.number}.step")
         cq.exporters.export(built, f"outputs/{comp.number}.stl")
 
+
 def build(components: List[Component]):
     return dict(zip(components, map(lambda comp: comp.build().val(), components)))

@@ -1,6 +1,11 @@
 import cadquery as cq
 from typing import Callable
+from enum import Enum, auto
 
+class FlangeType(Enum):
+    EDGE = auto()
+    INSIDE= auto()
+    OUTSIDE= auto()
 
 def extrude_face(wp: cq.Workplane, distance: float) -> cq.Workplane:
     def _extrude_face_callback(f: cq.Face):
@@ -37,12 +42,20 @@ def flange(
     wp: cq.Workplane,
     face_selector: Callable[[cq.Workplane], cq.Workplane],
     edge_selector: Callable[[cq.Workplane], cq.Workplane],
-    angle: float,
-    radius: float,
-    distance: float,
+    distance: float = 10,
+    angle: float = 90,
+    radius: float = None,
     flip: bool = False,
+
+    relief_type: FlangeType = FlangeType.EDGE,
+    relief_width: float = None,
+    relief_depth: float = None,
+    relief_remnant: float = None,
+
 ) -> cq.Workplane:
+
     def _flange_callback(face):
+        nonlocal radius,relief_width,relief_depth,relief_remnant
         face_wp = cq.Workplane(face)
         long_edge = edge_selector(face_wp).first()
         long_edge_axis = long_edge.val().endPoint() - long_edge.val().startPoint()
@@ -66,6 +79,18 @@ def flange(
 
         if flip:
             xaxis = -xaxis
+
+        if radius is None:
+            radius = thickness
+
+        if relief_width is None:
+            relief_width = thickness
+
+        if relief_depth is None:
+            relief_depth = thickness * 0.5
+        
+        if relief_remnant is None:
+            relief_remnant = thickness * 2.0
 
         bend = (
             cq.Workplane(cq.Plane(center, xaxis, zaxis), origin=center, obj=face)
@@ -96,7 +121,9 @@ def flange(
     return wp.union(face_selector(wp).each(_flange_callback))
 
 cq.Workplane.flange = flange
-
+if 'show_object' in locals():
+    result = cq.Workplane("XY").box(10, 10, 1)
+    result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), distance=3)
 #if __name__ == "__main__":
 #    result = cq.Workplane("XY").box(10, 10, 1)
 #    result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)

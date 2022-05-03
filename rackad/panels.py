@@ -23,6 +23,11 @@ class PanelFlat(Part):
             .box(self.width, self.height, panel_thickness)
             .edges("|Z")
             .fillet(panel_fillet)
+            .faces(">Z")
+            .workplane()
+            .rect(3.5, 1.5, forConstruction=True)
+            .vertices()
+            .hole(5)
         )
 
 class PanelFormed(Part):

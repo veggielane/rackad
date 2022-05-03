@@ -47,6 +47,9 @@ def flange(
     radius: float = None,
     flip: bool = False,
 
+    offset_a: float = None,
+    offset_b: float = None,
+
     relief_type: FlangeType = FlangeType.EDGE,
     relief_width: float = None,
     relief_depth: float = None,

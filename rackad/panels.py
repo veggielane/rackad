@@ -5,6 +5,8 @@ from rackad.lib import (
     panel_width,
     panel_thickness,
     panel_fillet,
+    panel_hole_centre,
+    panel_hole_pitch
 )
 from rackad.part import Part
 from rackad.sheet import *
@@ -12,6 +14,8 @@ from rackad.sheet import *
 
 class PanelFlat(Part):
     def __init__(self, width: RackSize, u: int):
+        self.u = u
+        self.rack_size = width
         self.width = panel_width(width)
         self.height = panel_height(u)
         super(Part, self).__init__(
@@ -26,7 +30,7 @@ class PanelFlat(Part):
             .fillet(panel_fillet)
             .faces(">Z")
             .workplane()
-            .rect(3.5, 1.5, forConstruction=True)
+            .rect(panel_hole_centre(self.rack_size), panel_hole_pitch(self.u), forConstruction=True)
             .vertices()
             .hole(5)
         )

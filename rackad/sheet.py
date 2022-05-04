@@ -125,9 +125,7 @@ def flange(
 cq.Workplane.flange = flange
 if "show_object" in locals():
     result = cq.Workplane("XY").box(10, 10, 1)
-    result = result.flange(
-        lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), distance=3
-    )
+    result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), distance=3)
 # if __name__ == "__main__":
 #    result = cq.Workplane("XY").box(10, 10, 1)
 #    result = result.flange(lambda wp: wp.faces("|Y"), lambda wp: wp.edges(">Z"), 90, 1, 5)

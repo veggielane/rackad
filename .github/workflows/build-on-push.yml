@@ -26,7 +26,7 @@ jobs:
       - name: Setup Renderer
         uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: cadquery
+          activate-environment: renderer
           environment-file: ./environments/renderer.yml
           python-version: 3.10.4
       - name: Run Renderer

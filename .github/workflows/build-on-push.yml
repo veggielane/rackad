@@ -10,8 +10,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: openrndr/setup-opengl@v1.1
-      - run: xvfb-run glxinfo
+      - name: Install Mesa
+        run: | 
+          sudo apt update
+          sudo wget https://github.com/mmatl/travis_debs/raw/master/xenial/mesa_18.3.3-0.deb
+          sudo dpkg -i ./mesa_18.3.3-0.deb || true
+          sudo apt install -f
       - name: Setup cadquery
         uses: conda-incubator/setup-miniconda@v2
         with:
@@ -36,6 +40,8 @@ jobs:
         run: |
           conda info
           conda list
+          git clone https://github.com/mmatl/pyopengl.git
+          pip install ./pyopengl
           python render.py
       - uses: actions/upload-artifact@v3
         with:

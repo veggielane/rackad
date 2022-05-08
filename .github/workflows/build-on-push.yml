@@ -15,7 +15,7 @@ jobs:
         with:
           activate-environment: cadquery
           environment-file: ./environments/cadquery.yml
-          python-version: 3.10.4
+          python-version: 3.6.15
       - name: Run cadquery
         shell: bash -l {0}
         run: |
@@ -28,7 +28,7 @@ jobs:
         with:
           activate-environment: renderer
           environment-file: ./environments/renderer.yml
-          python-version: 3.10.4
+          python-version: 3.6.15
       - name: Run Renderer
         shell: bash -l {0}
         run: |

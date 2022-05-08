@@ -3,15 +3,16 @@ import rackad.panels as panel
 import rackad.mount as mount
 import cadquery as cq
 from rackad.builder import output, build
-from rackad.sheet import *
 
 parts = [
     panel.FLAT_1U19,
     panel.FLAT_2U19,
     panel.FLAT_1U10,
     panel.FLAT_2U10,
+    panel.FLAT_3U10,
+    panel.FLAT_4U10,
     panel.FORMED_1U10,
-    mount.Switch8(),
+    #mount.Switch8(),
 ]
 
 

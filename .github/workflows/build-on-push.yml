@@ -14,7 +14,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: cadquery
-          environment-file: environment.yml
+          environment-file: ./env/cadquery.yml
           python-version: 3.10.4
       - name: Run
         shell: bash -l {0}

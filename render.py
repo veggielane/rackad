@@ -3,7 +3,7 @@ import pyrender
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-fuze_trimesh = trimesh.load('outputs/1U19-PANEL-FORMED.stl')
+fuze_trimesh = trimesh.load('outputs/1U10-PANEL-FORMED.stl')
 mesh = pyrender.Mesh.from_trimesh(fuze_trimesh)
 scene = pyrender.Scene()
 scene.add(mesh)
@@ -22,4 +22,4 @@ scene.add(camera, pose=camera_pose)
 r = pyrender.OffscreenRenderer(400, 400)
 color, depth = r.render(scene)
 img = Image.fromarray(color)
-img.save(f"outputs/1U19-PANEL-FORMED.png")
+img.save(f"outputs/1U10-PANEL-FORMED.png")

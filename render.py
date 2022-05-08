@@ -3,6 +3,8 @@ import pyrender
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
+import os
+os.environ['PYOPENGL_PLATFORM'] = 'osmesa'
 fuze_trimesh = trimesh.load('outputs/1U10-PANEL-FORMED.stl')
 mesh = pyrender.Mesh.from_trimesh(fuze_trimesh)
 scene = pyrender.Scene()

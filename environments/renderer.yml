@@ -1,0 +1,6 @@
+name: renderer
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+ - pyrender
